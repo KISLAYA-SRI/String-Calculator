@@ -63,10 +63,21 @@ public class StringCalculator {
 			end = str.indexOf("]", strt);
 			if (strt == -1)
 				break;
-			pattern = pattern + str.substring(++strt, end) + "|";
+			String p = str.substring(++strt, end);
+			if (specialDelimiter(p)) {
+				pattern = pattern + "\\" + p + "|";
+			} else {
+				pattern = pattern + p + "|";
+			}
 		}
 		// System.out.println(pattern.substring(0, pattern.length() - 1));
 		return pattern.substring(0, pattern.length() - 1);
+	}
+
+	public static boolean specialDelimiter(String p) {
+		if (p.charAt(0) == '*' || p.charAt(0) == '+' || p.charAt(0) == '.' || p.charAt(0) == '$')
+			return true;
+		return false;
 	}
 
 }
