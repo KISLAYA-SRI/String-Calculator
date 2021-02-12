@@ -38,23 +38,13 @@ public class StringCalculator {
 		int idx = str.indexOf("\n");
 		String pattern = "";
 		if (multipleDelimiters(str)) {
-
-			/*
-			 * String = //[!][@][#]\n... So, the delimiters are at positions 3, 6, 9, 12,
-			 * ... in 0 based indexing
-			 */
-			int i = 3;
-			pattern = "[";
-			while (i < idx) {
-				pattern = pattern + str.charAt(i);
-				i += 3;
-			}
-			pattern = pattern + "]";
+			pattern = findDelimiters(str);
 		} else {
 			pattern = str.substring(2, idx);
 		}
 		String newstr = str.substring(idx + 1);
 		String nums[] = newstr.split(pattern);
+		// System.out.println(Arrays.toString(nums));
 		return nums;
 	}
 
@@ -63,6 +53,20 @@ public class StringCalculator {
 			return false;
 		else
 			return true;
+	}
+
+	public static String findDelimiters(String str) {
+		String pattern = "";
+		int strt = 0, end = 0;
+		while (true) {
+			strt = str.indexOf("[", strt);
+			end = str.indexOf("]", strt);
+			if (strt == -1)
+				break;
+			pattern = pattern + str.substring(++strt, end) + "|";
+		}
+		// System.out.println(pattern.substring(0, pattern.length() - 1));
+		return pattern.substring(0, pattern.length() - 1);
 	}
 
 }
