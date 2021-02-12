@@ -16,7 +16,7 @@ public class StringCalculator {
 		} else {
 			nums = s.split("[,\n]");
 		}
-		
+
 		List<Integer> list = new ArrayList<>();
 		for (String i : nums) {
 			int x = Integer.parseInt(i);
@@ -25,7 +25,7 @@ public class StringCalculator {
 			} else if (x > 1000) {
 				continue;
 			} else {
-				res = res + x;
+				res += x;
 			}
 		}
 		if (list.size() > 0) {
@@ -36,10 +36,33 @@ public class StringCalculator {
 
 	public static String[] startWithSlash(String str) {
 		int idx = str.indexOf("\n");
+		String pattern = "";
+		if (multipleDelimiters(str)) {
+
+			/*
+			 * String = //[!][@][#]\n... So, the delimiters are at positions 3, 6, 9, 12,
+			 * ... in 0 based indexing
+			 */
+			int i = 3;
+			pattern = "[";
+			while (i < idx) {
+				pattern = pattern + str.charAt(i);
+				i += 3;
+			}
+			pattern = pattern + "]";
+		} else {
+			pattern = str.substring(2, idx);
+		}
 		String newstr = str.substring(idx + 1);
-		String pattern = str.substring(2, idx);
 		String nums[] = newstr.split(pattern);
 		return nums;
+	}
+
+	public static boolean multipleDelimiters(String str) {
+		if (str.indexOf('[') == -1)
+			return false;
+		else
+			return true;
 	}
 
 }
