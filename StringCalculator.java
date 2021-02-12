@@ -25,7 +25,7 @@ public class StringCalculator {
 			} else if (x > 1000) {
 				continue;
 			} else {
-				res += x;
+				res = res + x;
 			}
 		}
 		if (list.size() > 0) {
