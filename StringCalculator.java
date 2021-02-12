@@ -22,6 +22,8 @@ public class StringCalculator {
 			int x = Integer.parseInt(i);
 			if (x < 0) {
 				list.add(x);
+			} else if (x > 1000) {
+				continue;
 			} else {
 				res += x;
 			}
