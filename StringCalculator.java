@@ -1,11 +1,14 @@
 package TEST;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class StringCalculator {
 
-	static int Add(String s) {
+	static int Add(String s) throws Exception {
 		if (s.length() == 0)
 			return 0;
-      		
+
 		int res = 0;
 		String nums[];
 		if (s.startsWith("//")) {
@@ -13,9 +16,18 @@ public class StringCalculator {
 		} else {
 			nums = s.split("[,\n]");
 		}
-
+		
+		List<Integer> list = new ArrayList<>();
 		for (String i : nums) {
-			res += Integer.parseInt(i);
+			int x = Integer.parseInt(i);
+			if (x < 0) {
+				list.add(x);
+			} else {
+				res += x;
+			}
+		}
+		if (list.size() > 0) {
+			throw new Exception("negatives not allowed " + list.toString().replace("[", "").replace("]", ""));
 		}
 		return res;
 	}
